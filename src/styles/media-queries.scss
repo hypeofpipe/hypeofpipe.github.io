@@ -1,0 +1,78 @@
+/* Widths in em units (1em = 16px if the user hasn't changed their default font size) */
+$very-very-tiny: 25em;   // 400px
+$tiny: 37.5em;           // 600px
+$small: 48.75em;         // 780px
+$medium: 71.875em;       // 1150px
+$large: 111.25em;        // 1780px
+$extra-large: 175em;     // 2800px
+
+@mixin for-size($size) {
+  @if $size == 'very-very-tiny' {
+    @media (max-width: $very-very-tiny) { @content; }
+  } @else if $size == 'tiny' {
+    @media (min-width: $very-very-tiny) and (max-width: $tiny) { @content; }
+  } @else if $size == 'small' {
+    @media (min-width: $tiny) and (max-width: $small) { @content; }
+  } @else if $size == 'medium' {
+    @media (min-width: $small) and (max-width: $medium) { @content; }
+  } @else if $size == 'large' {
+    @media (min-width: $medium) and (max-width: $large) { @content; }
+  } @else if $size == 'extra-large' {
+    @media (min-width: $large) and (max-width: $extra-large) { @content; }
+  } @else if $size == 'above-extra-large' {
+    @media (min-width: $extra-large) { @content; }
+  } else {
+    @warn "Unknown `for-size` value: `#{$size}`. Please use: very-very-tiny, tiny, small, medium, large, extra-large, or above-extra-large.";
+  }
+}
+
+@mixin landscape() {
+  @media (orientation: landscape) { @content; }
+}
+
+@mixin portrait() {
+  @media (orientation: portrait) { @content; }
+}
+
+@mixin retina() {
+  @media (-webkit-min-device-pixel-ratio: 2),
+         (min-resolution: 192dpi) { @content; }
+}
+
+@mixin phone-up {
+  @media (min-width: #{$tiny}) {
+    @content;
+  }
+}
+@mixin tablet-up {
+  @media (min-width: #{$small}) {
+    @content;
+  }
+}
+@mixin laptop-up {
+  @media (min-width: #{$medium}) {
+    @content;
+  }
+}
+@mixin monitor-up {
+  @media (min-width: #{$large}) {
+    @content;
+  }
+}
+@mixin big-screen-up {
+  @media (min-width: #{$extra-large}) {
+    @content;
+  }
+}
+
+@mixin tablet-down {
+  @media (max-width: #{$small - 0.0625em}) {
+    @content;
+  }
+}
+
+@mixin safari() {
+  // The existing css safari hack is replaced by a more standard approach when adding specific safari styles.
+  // If still needed, the following can be used:
+  @media not all and (min-resolution:.001dpcm) { @content; }
+}

@@ -1,5 +1,5 @@
 <script>
-	import Portfolio from './portfolio.svelte';
+	import About from './about.svelte';
 </script>
 
-<Portfolio />
+<About />

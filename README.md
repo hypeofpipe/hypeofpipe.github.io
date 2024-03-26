@@ -1,3 +1,11 @@
+# portfolio-page
+
+⭐This project was inspired by:
+
+- [SvelteKit](https://kit.svelte.dev/)
+- [SvelteKit Blog](https://kit.svelte.dev/docs#blog)
+- [Alicia Syke's portfolio page](https://github.com/Lissy93/my-website)
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
