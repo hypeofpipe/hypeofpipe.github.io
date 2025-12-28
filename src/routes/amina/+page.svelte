@@ -1,12 +1,12 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
 
-	let animationId = null;
-	let resizeHandler = null;
+	let animationId: number | null = null;
+	let resizeHandler: (() => void) | null = null;
 
 	onMount(() => {
 		// Load Three.js if not already loaded
-		if (typeof window.THREE === 'undefined') {
+		if (typeof (window as any).THREE === 'undefined') {
 			const script = document.createElement('script');
 			script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
 			script.onload = initScene;
@@ -40,7 +40,7 @@
 	});
 
 	function initScene() {
-		const THREE = window.THREE;
+		const THREE = (window as any).THREE;
 
 		// Mobile detection and settings
 		const isMobile = window.innerWidth < 768;
@@ -77,8 +77,8 @@
 		scene.add(pointLight);
 
 		// Global variables
-		let textMesh = null;
-		let roses = [];
+		let textMesh: any = null;
+		let roses: any[] = [];
 		let floatOffset = 0;
 
 		// Create rose emoji texture
@@ -89,10 +89,10 @@
 			const ctx = canvas.getContext('2d');
 
 			// Draw emoji
-			ctx.font = '48px Arial';
-			ctx.textAlign = 'center';
-			ctx.textBaseline = 'middle';
-			ctx.fillText('🌹', 32, 32);
+			ctx!.font = '48px Arial';
+			ctx!.textAlign = 'center';
+			ctx!.textBaseline = 'middle';
+			ctx!.fillText('🌹', 32, 32);
 
 			const texture = new THREE.Texture(canvas);
 			texture.needsUpdate = true;
@@ -148,14 +148,14 @@
 		}
 
 		// Load font and create 3D text
-		const loader = new THREE.FontLoader();
+		const loader = new (THREE as any).FontLoader();
 
 		loader.load(
 			'https://threejs.org/examples/fonts/helvetiker_bold.typeface.json',
-			function (font) {
-				document.getElementById('loading').style.display = 'none';
+			function (font: any) {
+				document.getElementById('loading')!.style.display = 'none';
 
-				const textGeometry = new THREE.TextGeometry('I love Amina\nso much', {
+				const textGeometry = new (THREE as any).TextGeometry('I love Amina\nso much', {
 					font: font,
 					size: 1.5 * textSizeMultiplier,
 					height: 0.5,
@@ -183,14 +183,14 @@
 				// Start animation
 				animate();
 			},
-			function (xhr) {
+			function (xhr: ProgressEvent) {
 				const percent = ((xhr.loaded / xhr.total) * 100).toFixed(0);
-				document.getElementById('loading').textContent = `Loading font... ${percent}%`;
+				document.getElementById('loading')!.textContent = `Loading font... ${percent}%`;
 			},
-			function (err) {
+			function (err: ErrorEvent) {
 				console.error('Font loading error:', err);
-				document.getElementById('loading').style.display = 'none';
-				const errorDiv = document.getElementById('error');
+				document.getElementById('loading')!.style.display = 'none';
+				const errorDiv = document.getElementById('error')!;
 				errorDiv.style.display = 'block';
 				errorDiv.textContent = 'Failed to load font. Please refresh the page.';
 			}
@@ -226,11 +226,11 @@
 	}
 
 	// Prevent touch scrolling and zooming on mobile
-	function preventTouchMove(e) {
+	function preventTouchMove(e: TouchEvent) {
 		e.preventDefault();
 	}
 
-	function preventGesture(e) {
+	function preventGesture(e: Event) {
 		e.preventDefault();
 	}
 </script>
